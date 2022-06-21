@@ -87,3 +87,71 @@ describe('walk', () => {
 		expect(pet.fitness).toEqual(10);
 	});
   });
+
+  describe('feed', () => {
+	it('decreases hunger level by 3', () => {
+		const pet = new Pet('Fido');
+
+		pet.hunger = 15;
+		pet.feed();
+
+		expect(pet.hunger).toEqual(12);
+	});
+	
+	it('decreases hunger to a minimum of 0', () => {
+		const pet = new Pet('Fido');
+
+		pet.hunger = 2;
+		pet.feed();
+
+		expect(pet.hunger).toEqual(0);
+	});
+
+  });
+
+  describe('checkUp', () => {
+
+	it('returns instructions for improving the pet\'s fitness if 3 or less', () => {
+		const pet = new Pet('Fido');
+
+		pet.fitness = 2;
+
+		pet.checkUp();
+
+		expect(pet.checkUp()).toEqual('I need a walk');
+
+	});
+
+	it('returns instructions for satiating pet\'s hunger if 5 or more', () => {
+		const pet = new Pet('Fido');
+
+		pet.hunger = 6;
+
+		pet.checkUp();
+
+		expect(pet.checkUp()).toEqual('I am hungry');
+	});
+
+	it('checks if pet is both hungry and unfit', () => {
+		const pet = new Pet('Fido');
+
+		pet.fitness = 1;
+		pet.hunger = 8;
+
+		pet.checkUp();
+
+		expect(pet.checkUp()).toEqual('I am hungry AND I need a walk');
+	});
+
+	it('checks if pet is full and fit', () => {
+		const pet = new Pet('Fido');
+
+		pet.fitness = 7;
+		pet.hunger = 2;
+
+		pet.checkUp();
+
+		expect(pet.checkUp()).toEqual('I feel great!');
+	});
+
+  });
